@@ -8,6 +8,8 @@ else
     echo "[-] Please install git and try again."
 fi
 
+rm ~/.gdbinit
+
 echo "[+] Downloading PEDA..."
 git clone https://github.com/longld/peda.git ~/peda
 
@@ -16,7 +18,8 @@ git clone https://github.com/pwndbg/pwndbg
 cd pwndbg
 ./setup.sh
 cd ..
-rm -rf pwndbg
+mv pwndbg ~/pwndbg-src 
+echo "source ~/pwndbg-src/gdbinit.py" > ~/.gdbinit_pwndbg
 
 echo "[+] Downloading GEF..."
 wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py

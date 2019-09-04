@@ -28,12 +28,22 @@ echo source ~/.gdbinit-gef.py >> ~/.gdbinit
 echo "[+] Setting .gdbinit..."
 cp gdbinit ~/.gdbinit
 
-echo "[+] Creating files..."
-cp gdb-peda /usr/bin/gdb-peda
-cp gdb-pwndbg /usr/bin/gdb-pwndbg
-cp gdb-gef /usr/bin/gdb-gef
+{
+  echo "[+] Creating files..."
+    sudo cp gdb-peda /usr/bin/gdb-peda &&\
+    sudo cp gdb-pwndbg /usr/bin/gdb-pwndbg &&\
+    sudo cp gdb-gef /usr/bin/gdb-gef
+} || {
+  echo "[-] Permission denied"
+    exit
+}
 
-echo "[+] Setting permissions..."
-chmod +x /usr/bin/gdb-*
+{
+  echo "[+] Setting permissions..."
+    sudo chmod +x /usr/bin/gdb-*
+} || {
+  echo "[-] Permission denied"
+    exit
+}
 
 echo "[+] Done"

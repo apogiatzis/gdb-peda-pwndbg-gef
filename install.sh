@@ -8,22 +8,24 @@ else
     echo "[-] Please install git and try again."
 fi
 
-rm ~/.gdbinit
+if [ -f ~/.gdbinit ] || [ -h ~/.gdbinit ]; then
+    echo "backing up gdbinit file"
+    cp ~/.gdbinit ~/.gdbinit.back_up
+fi
+
 
 echo "[+] Downloading PEDA..."
-git clone https://github.com/longld/peda.git ~/peda
+git clone https://github.com/longld/peda.git $PWD/peda
+
 
 echo "[+] Downloading Pwndbg..."
-git clone https://github.com/pwndbg/pwndbg
-cd pwndbg
-./setup.sh
-cd ..
-mv pwndbg ~/pwndbg-src 
-echo "source ~/pwndbg-src/gdbinit.py" > ~/.gdbinit_pwndbg
+git clone https://github.com/pwndbg/pwndbg.git $PWD/pwndbg
+sh $PWD/pwndbg/setup.sh
+
 
 echo "[+] Downloading GEF..."
-wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py
-echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+git clone https://github.com/hugsy/gef.git $PWD/gef
+
 
 echo "[+] Setting .gdbinit..."
 cp gdbinit ~/.gdbinit

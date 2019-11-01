@@ -9,22 +9,53 @@ else
 fi
 
 if [ -f ~/.gdbinit ] || [ -h ~/.gdbinit ]; then
-    echo "backing up gdbinit file"
+    echo "[+] backing up gdbinit file"
     cp ~/.gdbinit ~/.gdbinit.back_up
 fi
 
+# download peda and decide whether to overwrite if exists
+if [ -d ~/peda ] || [ -h ~/.peda ]; then
+    echo "[-] PEDA found"
+    read -p "skip download to continue? (enter 'y' or 'n') " skip_peda
 
-echo "[+] Downloading PEDA..."
-git clone https://github.com/longld/peda.git $PWD/peda
+    if [ $skip_peda = 'n' ]; then
+        rm -rf ~/peda
+        git clone https://github.com/longld/peda.git ~/peda
+    else
+        echo "PEDA skipped"
+    fi
+else
+    echo "[+] Downloading PEDA..."
+    git clone https://github.com/longld/peda.git ~/peda
+fi
 
 
-echo "[+] Downloading Pwndbg..."
-git clone https://github.com/pwndbg/pwndbg.git $PWD/pwndbg
-sh $PWD/pwndbg/setup.sh
+# download pwndbg
+if [ -d ~/pwndbg ] || [ -h ~/.pwndbg ]; then
+    echo "[-] Pwndbg found"
+    read -p "skip download to continue? (enter 'y' or 'n') " skip_pwndbg
+
+    if [ $skip_pwndbg = 'n' ]; then
+        rm -rf ~/pwndbg
+        git clone https://github.com/pwndbg/pwndbg.git ~/pwndbg
+
+        cd ~/pwndbg
+        ./setup.sh
+    else
+        echo "Pwndbg skipped"
+    fi
+else
+    echo "[+] Downloading Pwndbg..."
+    git clone https://github.com/pwndbg/pwndbg.git ~/pwndbg
+
+    cd ~/pwndbg
+    ./setup.sh
+fi
 
 
+# download gef
 echo "[+] Downloading GEF..."
-git clone https://github.com/hugsy/gef.git $PWD/gef
+git clone https://github.com/hugsy/gef.git ~/gef
 
 
 echo "[+] Setting .gdbinit..."

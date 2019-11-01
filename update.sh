@@ -1,11 +1,11 @@
-echo "Updating PEDA..."
-cd ~/gdb-peda-pwndbg-gef/peda
+echo "[+] Updating PEDA..."
+cd ~/peda
 git pull
 
-echo "Updating Pwndbg..."
-cd ~/gdb-peda-pwndbg-gef/pwndbg
+echo "[+] Updating Pwndbg..."
+cd ~/pwndbg
 git pull
 
-echo "Updating GEF..."
-cd ~/gdb-peda-pwndbg-gef/gef
+echo "[+] Updating GEF..."
+cd ~/gef
 git pull

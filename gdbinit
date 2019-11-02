@@ -6,14 +6,14 @@ Initializes the PEDA (Python Exploit Development Assistant for GDB) framework
 end
 
 define init-pwndbg
-source ~/.gdbinit_pwndbg
+source ~/pwndbg/gdbinit.py
 end
 document init-pwndbg
 Initializes PwnDBG
 end
 
 define init-gef
-source ~/.gdbinit-gef.py
+source ~/gef/gef.py
 end
 document init-gef
 Initializes GEF (GDB Enhanced Features)

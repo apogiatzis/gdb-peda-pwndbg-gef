@@ -8,22 +8,55 @@ else
     echo "[-] Please install git and try again."
 fi
 
-rm ~/.gdbinit
+if [ -f ~/.gdbinit ] || [ -h ~/.gdbinit ]; then
+    echo "[+] backing up gdbinit file"
+    cp ~/.gdbinit ~/.gdbinit.back_up
+fi
 
-echo "[+] Downloading PEDA..."
-git clone https://github.com/longld/peda.git ~/peda
+# download peda and decide whether to overwrite if exists
+if [ -d ~/peda ] || [ -h ~/.peda ]; then
+    echo "[-] PEDA found"
+    read -p "skip download to continue? (enter 'y' or 'n') " skip_peda
 
-echo "[+] Downloading Pwndbg..."
-git clone https://github.com/pwndbg/pwndbg
-cd pwndbg
-./setup.sh
-cd ..
-mv pwndbg ~/pwndbg-src 
-echo "source ~/pwndbg-src/gdbinit.py" > ~/.gdbinit_pwndbg
+    if [ $skip_peda = 'n' ]; then
+        rm -rf ~/peda
+        git clone https://github.com/longld/peda.git ~/peda
+    else
+        echo "PEDA skipped"
+    fi
+else
+    echo "[+] Downloading PEDA..."
+    git clone https://github.com/longld/peda.git ~/peda
+fi
 
+
+# download pwndbg
+if [ -d ~/pwndbg ] || [ -h ~/.pwndbg ]; then
+    echo "[-] Pwndbg found"
+    read -p "skip download to continue? (enter 'y' or 'n') " skip_pwndbg
+
+    if [ $skip_pwndbg = 'n' ]; then
+        rm -rf ~/pwndbg
+        git clone https://github.com/pwndbg/pwndbg.git ~/pwndbg
+
+        cd ~/pwndbg
+        ./setup.sh
+    else
+        echo "Pwndbg skipped"
+    fi
+else
+    echo "[+] Downloading Pwndbg..."
+    git clone https://github.com/pwndbg/pwndbg.git ~/pwndbg
+
+    cd ~/pwndbg
+    ./setup.sh
+fi
+
+
+# download gef
 echo "[+] Downloading GEF..."
-wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py
-echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+git clone https://github.com/hugsy/gef.git ~/gef
+
 
 echo "[+] Setting .gdbinit..."
 cp gdbinit ~/.gdbinit

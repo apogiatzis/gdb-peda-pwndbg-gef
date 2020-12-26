@@ -1,5 +1,7 @@
 #!/bin/sh
 
+installer_path=$PWD
+
 echo "[+] Checking for required dependencies..."
 if command -v git >/dev/null 2>&1 ; then
     echo "[-] Git found!"
@@ -52,11 +54,11 @@ else
     ./setup.sh
 fi
 
-
 # download gef
 echo "[+] Downloading GEF..."
 git clone https://github.com/hugsy/gef.git ~/gef
 
+cd $installer_path
 
 echo "[+] Setting .gdbinit..."
 cp gdbinit ~/.gdbinit

@@ -31,6 +31,21 @@ else
     git clone https://github.com/longld/peda.git ~/peda
 fi
 
+# download peda arm
+if [ -d ~/peda-arm ] || [ -h ~/.peda ]; then
+    echo "[-] PEDA ARM found"
+    read -p "skip download to continue? (enter 'y' or 'n') " skip_peda
+
+    if [ $skip_peda = 'n' ]; then
+        rm -rf ~/peda-arm
+	git clone https://github.com/alset0326/peda-arm.git
+    else
+	echo "PEDA ARM skipped"
+    fi
+else	    
+    echo "[+] Downloading PEDA ARM..."
+    git clone https://github.com/alset0326/peda-arm.git ~/peda-arm
+fi
 
 # download pwndbg
 if [ -d ~/pwndbg ] || [ -h ~/.pwndbg ]; then
@@ -66,6 +81,8 @@ cp gdbinit ~/.gdbinit
 {
   echo "[+] Creating files..."
     sudo cp gdb-peda /usr/bin/gdb-peda &&\
+    sudo cp gdb-peda-arm /usr/bin/gdb-peda-arm &&\
+    sudo cp gdb-peda-intel /usr/bin/gdb-peda-intel &&\
     sudo cp gdb-pwndbg /usr/bin/gdb-pwndbg &&\
     sudo cp gdb-gef /usr/bin/gdb-gef
 } || {

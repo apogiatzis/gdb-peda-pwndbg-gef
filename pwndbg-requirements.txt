@@ -1,0 +1,15 @@
+future
+isort!=4.3.0
+pip
+psutil>=3.1.0
+pycparser
+pyelftools
+python-ptrace>=0.8
+ROPgadget
+six
+pygments
+capstone==4.0.1
+enum34
+pytest
+testresources
+unicorn==1.0.2rc1

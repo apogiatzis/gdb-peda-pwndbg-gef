@@ -38,7 +38,7 @@ if [ -d ~/peda-arm ] || [ -h ~/.peda ]; then
 
     if [ $skip_peda = 'n' ]; then
         rm -rf ~/peda-arm
-	git clone https://github.com/alset0326/peda-arm.git
+	git clone https://github.com/alset0326/peda-arm.git ~/peda-arm
     else
 	echo "PEDA ARM skipped"
     fi
